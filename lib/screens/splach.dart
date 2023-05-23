@@ -27,7 +27,7 @@ class _splachState extends State<splach> {
       children: [
         Container(
           decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage('assets/image/jp.jpg'))),
+              image: DecorationImage(image: AssetImage('assets/image/splach.png'))),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
