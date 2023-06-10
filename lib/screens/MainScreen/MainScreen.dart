@@ -132,7 +132,7 @@ class _MainScreenState extends State<MainScreen> {
                                       decoration: BoxDecoration(
                                         //color: Colors.white,
                                           image: DecorationImage(
-                                              image: AssetImage(jsonList[index]['image']))),
+                                              image: AssetImage('assets/image/rolls/rolls-side-view.png'))),
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
