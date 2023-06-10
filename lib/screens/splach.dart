@@ -3,6 +3,7 @@ import 'package:car_hub/screens/MainScreen/MainScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../const/colors.dart';
+import 'Auth/LogIn.dart';
 
 class splach extends StatefulWidget {
   const splach({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _splachState extends State<splach> {
     // TODO: implement initState
     super.initState();
     Timer(Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MainScreen()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Login()));
     });
   }
 

@@ -1,4 +1,5 @@
 import 'package:car_hub/const/colors.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -13,20 +14,52 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  var jsonList ;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    GetData();
+  }
+
+
+  void GetData() async {
+    try {
+      var response = await Dio().get('http://192.168.1.169:3333/Vehicle');
+      if (response.statusCode == 200) {
+        print(response);
+
+        setState(() {
+          jsonList = response.data as List;
+        });
+
+      } else {
+        print(response.statusCode);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xffffffff),
         body: Column(
+         crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
             mainPageHeader(),
-            HeaderText(),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: HeaderText(),
+            ),
             searchBar(),
             Expanded(
               child: Container(
-                height: MediaQuery.of(context).size.height / 1.85,
+                height: MediaQuery.of(context).size.height / 1.8,
                 width: double.infinity,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -42,7 +75,7 @@ class _MainScreenState extends State<MainScreen> {
                       decoration: BoxDecoration(
                           color: Colors.grey,
                           borderRadius: BorderRadius.circular(10)),
-                    ),
+                    ),//the notich on the top of the black container
                     Container(
                       height: 400,
                       child: ListView.separated(
@@ -68,7 +101,7 @@ class _MainScreenState extends State<MainScreen> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Covert 711 SX ',
+                                            jsonList[index]['name'],
                                             style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
@@ -86,7 +119,7 @@ class _MainScreenState extends State<MainScreen> {
                                       child: Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            'Coupe',
+                                            jsonList[index]['model'],
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.normal,
@@ -99,7 +132,7 @@ class _MainScreenState extends State<MainScreen> {
                                       decoration: BoxDecoration(
                                         //color: Colors.white,
                                           image: DecorationImage(
-                                              image: AssetImage('assets/image/corvet.png'))),
+                                              image: AssetImage(jsonList[index]['image']))),
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,21 +148,21 @@ class _MainScreenState extends State<MainScreen> {
                                                     //horizontalTitleGap: .5,
                                                     minLeadingWidth: .5,
                                                     leading: Icon(Icons.person,color: PrimaryColor),
-                                                    title: Text('2',style: TextStyle(color: Colors.white),),
+                                                    title: Text(jsonList[index]['passengers_capacity'].toString(),style: TextStyle(color: Colors.white),),
                                                   )),
                                               Expanded(
                                                   flex: 4,
                                                   child: ListTile(
                                                     minLeadingWidth: 1,
                                                     leading: Icon(Icons.filter_list,color: PrimaryColor),
-                                                    title: Text('Manual',style: TextStyle(color: Colors.white)),
+                                                    title: Text(jsonList[index]['gear'],style: TextStyle(color: Colors.white)),
                                                   ))
                                             ],
                                           ),
                                         ),
 
                                         Text('\$  ',style: TextStyle(color: PrimaryColor,fontSize: 22),),
-                                        Text('400 /',style: TextStyle(color: Colors.white,fontSize: 20),),
+                                        Text(jsonList[index]['rent_price'].toString() +' /',style: TextStyle(color: Colors.white,fontSize: 20),),
                                         Text('day',style: TextStyle(color: Colors.grey),),
                                         SizedBox(width: 20,)
                                       ],
@@ -140,7 +173,7 @@ class _MainScreenState extends State<MainScreen> {
                             )
                           ],
                         ),
-                        itemCount: 5,
+                        itemCount: jsonList == null ? 0 :  jsonList.length,
                         padding: EdgeInsets.all(10),
 
                       ),
@@ -151,19 +184,19 @@ class _MainScreenState extends State<MainScreen> {
             )
           ],
         ),
-        bottomNavigationBar:BottomNavigationBar(
-
-
-            unselectedItemColor: Color(0xff7b888f),
-            elevation: 0,
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home,color: PrimaryColor),label: 'Home',backgroundColor:Color(0xff272f35),),
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_month,),label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.add_alert_rounded,),label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.person,),label: ''),
-
-
-          ],) ,
+        // bottomNavigationBar:BottomNavigationBar(
+        //
+        //
+        //     unselectedItemColor: Color(0xff7b888f),
+        //     elevation: 0,
+        //   items: [
+        //     BottomNavigationBarItem(icon: Icon(Icons.home,color: PrimaryColor),label: 'Home',backgroundColor:Color(0xff272f35),),
+        //     BottomNavigationBarItem(icon: Icon(Icons.calendar_month,),label: ''),
+        //     BottomNavigationBarItem(icon: Icon(Icons.add_alert_rounded,),label: ''),
+        //     BottomNavigationBarItem(icon: Icon(Icons.person,),label: ''),
+        //
+        //
+        //   ],) ,
       ),
     );
   }
@@ -192,10 +225,11 @@ class searchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          width: 260,
+          width: 300,
           height: 45,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
@@ -211,14 +245,17 @@ class searchBar extends StatelessWidget {
             ]),
           ),
         ),
-        Container(
-          height: 45,
-          width: 45,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: kPrimaryColor,
+        Padding(
+          padding: const EdgeInsets.only(right: 15.0),
+          child: Container(
+            height: 45,
+            width: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: kPrimaryColor,
+            ),
+            child: Icon(Icons.bubble_chart_outlined),
           ),
-          child: Icon(Icons.bubble_chart_outlined),
         )
       ],
     );
@@ -236,7 +273,7 @@ class mainPageHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(5.0),
           child: Stack(
             alignment: Alignment.topLeft,
             children: [
@@ -266,14 +303,14 @@ class mainPageHeader extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.only(right: 15.0),
                     child: CircleAvatar(
                       radius: 20,
-                      backgroundImage: AssetImage('assets/image/jp.jpg'),
+                      child: Icon(Icons.settings,color: Colors.black),
                       backgroundColor: kPrimaryColor,
                       foregroundColor: kPrimaryColor,
                     ),
-                  )
+                  ),
                 ],
               )
             ],

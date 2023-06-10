@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../const/colors.dart';
+import '../MainScreen/MainScreen.dart';
+import '../MainScreen/navScreen.dart';
 import 'ForgetPassword.dart';
 import 'SignUp.dart';
 
@@ -142,18 +146,25 @@ class _LoginState extends State<Login> {
                         SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          height: 50,
-                          margin: EdgeInsets.symmetric(horizontal: 50),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: Color(0xFF5E5E5E)),
-                          child: Center(
-                            child: Text(
-                              "Skip >>",
-                              style: TextStyle(
-                                  color: Color(0xffedb54f),
-                                  fontWeight: FontWeight.bold),
+                        InkWell(
+                          onTap: (){
+                            Timer(Duration(seconds: 3), () {
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Home()));
+                            });
+                          },
+                          child: Container(
+                            height: 50,
+                            margin: EdgeInsets.symmetric(horizontal: 50),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Color(0xFF5E5E5E)),
+                            child: Center(
+                              child: Text(
+                                "Skip >>",
+                                style: TextStyle(
+                                    color: Color(0xffedb54f),
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ),

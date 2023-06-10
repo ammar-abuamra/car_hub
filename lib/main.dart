@@ -2,7 +2,11 @@ import 'package:car_hub/screens/Auth/ForgetPassword.dart';
 import 'package:car_hub/screens/Auth/LogIn.dart';
 import 'package:car_hub/screens/Auth/SignUp.dart';
 import 'package:car_hub/screens/CarDetails.dart';
+import 'package:car_hub/screens/MainScreen/Booking.dart';
 import 'package:car_hub/screens/MainScreen/MainScreen.dart';
+import 'package:car_hub/screens/MainScreen/empty.dart';
+import 'package:car_hub/screens/MainScreen/navScreen.dart';
+import 'package:car_hub/screens/MainScreen/payment.dart';
 import 'package:car_hub/screens/splach.dart';
 import 'package:flutter/material.dart';
 
@@ -30,14 +34,15 @@ class MyApp extends StatelessWidget {
 
 
 debugShowCheckedModeBanner: false,
-      home: Signup(),
+      home: MainScreen(),
       routes: {
         'MainScreen':(context)=> MainScreen(),
         'CarDetails':(context)=>CarDetails(),
         'Login':(context)=>Login(),
                 'Signup':(context)=>Signup(),
         'ForgetPaswword':(context)=>ForgetPaswword(),
-
+        'Booking':(context)=>Booking(),
+        'Payment':(context)=>Payment(),
       },
     );
   }
