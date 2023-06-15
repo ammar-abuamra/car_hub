@@ -1,3 +1,4 @@
+import 'package:car_hub/LocalData/CarsData.dart';
 import 'package:car_hub/const/colors.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -14,33 +15,45 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  var jsonList ;
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    GetData();
-  }
-
-
-  void GetData() async {
-    try {
-      var response = await Dio().get('http://192.168.1.169:3333/Vehicle');
-      if (response.statusCode == 200) {
-        print(response);
-
-        setState(() {
-          jsonList = response.data as List;
-        });
-
-      } else {
-        print(response.statusCode);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
+  List<CarsData> CArsData = [
+    CarsData(
+        'Corvet Zr1',
+        'Coupe',
+        2,
+        400,
+        'assets/image/corvet/corvet-side-view.png',
+        'corvet-front-vierw.png',
+        'assets/image/corvet/corvet-intereor.png',
+        'Manual'),
+    CarsData(
+        'Rolls Royce Warith',
+        '4 Doors',
+        5,
+        1300,
+        'assets/image/rolls/rolls-side-view.png',
+        'assets/image/rolls/rolls-front-view.png',
+        'assets/image/rolls/rolls-interior.png',
+        'Auto'),
+    CarsData(
+        'Lamborghini Urus',
+        'Suv',
+        5,
+        900,
+        'assets/image/urus/urise-side-view.png',
+        'assets/image/urus/urus-front-view-removebg-preview.png',
+        'assets/image/urus/urus-inside-viewpreview.png',
+        'Top Tornic'),
+    CarsData(
+        'Maclaren 720 s ',
+        'Super Car',
+        2,
+        1800,
+        'assets/image/maclern/maclern-side-view.png',
+        'assets/image/maclern/maclern-front-view.png',
+        'assets/image/maclern/maclern-ineteror.png',
+        'Top Tronic'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +61,8 @@ class _MainScreenState extends State<MainScreen> {
       child: Scaffold(
         backgroundColor: Color(0xffffffff),
         body: Column(
-         crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             mainPageHeader(),
             Padding(
               padding: const EdgeInsets.only(left: 15.0),
@@ -75,17 +87,33 @@ class _MainScreenState extends State<MainScreen> {
                       decoration: BoxDecoration(
                           color: Colors.grey,
                           borderRadius: BorderRadius.circular(10)),
-                    ),//the notich on the top of the black container
+                    ), //the notich on the top of the black container
                     Container(
                       height: 400,
                       child: ListView.separated(
-
+                        //shrinkWrap: true,
                         separatorBuilder: (context, index) => Divider(),
                         itemBuilder: (context, index) => Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
-                              onTap: (){ Navigator.of(context).push(MaterialPageRoute(builder: (_) => CarDetails()));},
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CarDetails(
+                                        CarsName: CArsData[index].CarName,
+                                        photo: CArsData[index].Side_Image,
+                                    frontView:CArsData[index].Front_Image,
+                                      interior:CArsData[index].Interior_Image,
+                                      gear:CArsData[index].Gear,
+                                      passenger:CArsData[index].passengers_capacity,
+
+
+
+
+
+
+                                    )));
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
@@ -98,10 +126,11 @@ class _MainScreenState extends State<MainScreen> {
                                     Padding(
                                       padding: EdgeInsets.all(15.0),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            jsonList[index]['name'],
+                                            CArsData[index].CarName,
                                             style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
@@ -115,11 +144,12 @@ class _MainScreenState extends State<MainScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0),
                                       child: Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            jsonList[index]['model'],
+                                            CArsData[index].Classification,
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.normal,
@@ -130,41 +160,59 @@ class _MainScreenState extends State<MainScreen> {
                                       height: 250,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        //color: Colors.white,
+                                          //color: Colors.white,
                                           image: DecorationImage(
-                                              image: AssetImage('assets/image/rolls/rolls-side-view.png'))),
+                                              image: AssetImage(
+                                                  CArsData[index].Side_Image))),
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Expanded(
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                  flex: 1,
-                                                  child: ListTile(
-                                                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                                                    //horizontalTitleGap: .5,
-                                                    minLeadingWidth: .5,
-                                                    leading: Icon(Icons.person,color: PrimaryColor),
-                                                    title: Text(jsonList[index]['passengers_capacity'].toString(),style: TextStyle(color: Colors.white),),
-                                                  )),
-                                              Expanded(
-                                                  flex: 4,
-                                                  child: ListTile(
-                                                    minLeadingWidth: 1,
-                                                    leading: Icon(Icons.filter_list,color: PrimaryColor),
-                                                    title: Text(jsonList[index]['gear'],style: TextStyle(color: Colors.white)),
-                                                  ))
-                                            ],
-                                          ),
-                                        ),
+                                        // Row(
+                                        //   mainAxisAlignment: MainAxisAlignment.start,
+                                        //   children: [
+                                        //     Expanded(
+                                        //         flex: 1,
+                                        //         child: ListTile(
+                                        //           contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                                        //           //horizontalTitleGap: .5,
+                                        //           minLeadingWidth: .5,
+                                        //           leading: Icon(Icons.person,color: PrimaryColor),
+                                        //           title: Text(CArsData[index].passengers_capacity.toString(),style: TextStyle(color: Colors.white),),
+                                        //         )),
+                                        //     Expanded(
+                                        //         flex: 4,
+                                        //         child: ListTile(
+                                        //           minLeadingWidth: 1,
+                                        //           leading: Icon(Icons.filter_list,color: PrimaryColor),
+                                        //           title: Text(CArsData[index].Gear,style: TextStyle(color: Colors.white)),
+                                        //         ))
+                                        //   ],
+                                        // ),
 
-                                        Text('\$  ',style: TextStyle(color: PrimaryColor,fontSize: 22),),
-                                        Text(jsonList[index]['rent_price'].toString() +' /',style: TextStyle(color: Colors.white,fontSize: 20),),
-                                        Text('day',style: TextStyle(color: Colors.grey),),
-                                        SizedBox(width: 20,)
+                                        Text(
+                                          '\$  ',
+                                          style: TextStyle(
+                                              color: PrimaryColor,
+                                              fontSize: 22),
+                                        ),
+                                        Text(
+                                          CArsData[index]
+                                                  .Rent_Price
+                                                  .toString() +
+                                              ' /',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20),
+                                        ),
+                                        Text(
+                                          'day',
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        )
                                       ],
                                     )
                                   ],
@@ -173,9 +221,8 @@ class _MainScreenState extends State<MainScreen> {
                             )
                           ],
                         ),
-                        itemCount: jsonList == null ? 0 :  jsonList.length,
+                        itemCount: CArsData.length,
                         padding: EdgeInsets.all(10),
-
                       ),
                     )
                   ],
@@ -306,7 +353,7 @@ class mainPageHeader extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 15.0),
                     child: CircleAvatar(
                       radius: 20,
-                      child: Icon(Icons.settings,color: Colors.black),
+                      child: Icon(Icons.settings, color: Colors.black),
                       backgroundColor: kPrimaryColor,
                       foregroundColor: kPrimaryColor,
                     ),

@@ -1,3 +1,4 @@
+import 'package:car_hub/LocalData/CarsData.dart';
 import 'package:car_hub/screens/Auth/ForgetPassword.dart';
 import 'package:car_hub/screens/Auth/LogIn.dart';
 import 'package:car_hub/screens/Auth/SignUp.dart';
@@ -34,10 +35,10 @@ class MyApp extends StatelessWidget {
 
 
 debugShowCheckedModeBanner: false,
-      home: MainScreen(),
+      home: Login(),
       routes: {
         'MainScreen':(context)=> MainScreen(),
-        'CarDetails':(context)=>CarDetails(),
+        'CarDetails':(context)=>CarDetails(CarsName: '',photo: '', frontView: '', interior: '', gear: '', passenger: 0,),
         'Login':(context)=>Login(),
                 'Signup':(context)=>Signup(),
         'ForgetPaswword':(context)=>ForgetPaswword(),

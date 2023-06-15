@@ -341,7 +341,7 @@ class _BookingState extends State<Booking> {
                 left: 10,
 
                 child: InkWell(
-                  onTap: (){ Navigator.of(context).push(MaterialPageRoute(builder: (_) => CarDetails()));},
+                  onTap: (){ Navigator.of(context).push(MaterialPageRoute(builder: (_) => CarDetails(CarsName: '',photo: '', passenger: 0, interior: '', gear: '', frontView: '',)));},
                   child: Text(
                     '<< Car Detail',
                     style: TextStyle(

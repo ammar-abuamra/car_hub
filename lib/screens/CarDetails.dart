@@ -1,3 +1,4 @@
+import 'package:car_hub/LocalData/CarsData.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -5,20 +6,31 @@ import '../const/colors.dart';
 import 'MainScreen/Booking.dart';
 
 class CarDetails extends StatefulWidget {
-  const CarDetails({Key? key}) : super(key: key);
+final String CarsName ;
+final String photo;
+final String frontView;
+final String interior;
+final String gear;
+final int passenger;
 
+   CarDetails({Key? key, required this.CarsName, required this.photo, required this.frontView, required this.interior, required this.gear, required this.passenger,  }) : super(key: key);
   @override
   State<CarDetails> createState() => _CarDetailsState();
 }
 
+
+
 class _CarDetailsState extends State<CarDetails> {
+
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: SecondryColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Corvet'),
+        title: Text('${widget.CarsName}'),
         actions: [Icon(Icons.more_horiz)],
       ),
       body: SingleChildScrollView(
@@ -30,24 +42,55 @@ class _CarDetailsState extends State<CarDetails> {
               height: 250,
               width: double.infinity,
               color: SecondryColor,
-              child: CarouselSlider(
-                options: CarouselOptions(height: 400.0),
-                items: [1, 2, 3, 4, 5].map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+              child:             Container(
+                margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                //padding: EdgeInsets.all(5),
+                height: 250,
+                width: double.infinity,
+                color: SecondryColor,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        height: 400,
+                        width: MediaQuery.of(context).size.width/1.2,
+
+                        margin: EdgeInsets.symmetric(horizontal: 15.0),
                         decoration: BoxDecoration(
                             color: Color(0xff272f35),
                             image: DecorationImage(
-                                image: AssetImage('assets/image/corvet.png'),
+                                image: AssetImage(widget.frontView),
                                 fit: BoxFit.contain),
                             borderRadius: BorderRadius.circular(15)),
-                      );
-                    },
-                  );
-                }).toList(),
+                      ),
+                      Container(
+                        height: 400,
+                        width: MediaQuery.of(context).size.width/1.2,
+                        margin: EdgeInsets.symmetric(horizontal: 15.0),
+                        decoration: BoxDecoration(
+                            color: Color(0xff272f35),
+                            image: DecorationImage(
+                                image: AssetImage(widget.photo),
+                                fit: BoxFit.contain),
+                            borderRadius: BorderRadius.circular(15)),
+                      ),
+                      Container(
+                        height: 400,
+                        width: MediaQuery.of(context).size.width/1.2,
+
+                        margin: EdgeInsets.symmetric(horizontal: 15.0),
+                        decoration: BoxDecoration(
+                            color: Color(0xff272f35),
+                            image: DecorationImage(
+                                image: AssetImage(widget.interior),
+                                fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(15)),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             Container(

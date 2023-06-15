@@ -148,9 +148,7 @@ class _LoginState extends State<Login> {
                         ),
                         InkWell(
                           onTap: (){
-                            Timer(Duration(seconds: 3), () {
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Home()));
-                            });
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => Home()));
                           },
                           child: Container(
                             height: 50,
