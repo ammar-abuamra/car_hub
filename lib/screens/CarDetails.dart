@@ -118,11 +118,11 @@ class _CarDetailsState extends State<CarDetails> {
                     child: Row(
                       children: [
                         CarSpecsContainer(
-                            header: 'Top Speed', center: '450', bottom: 'km'),
+                            header: 'Engine ', center: 'V8', bottom: 'km'),
                         CarSpecsContainer(
                             header: 'Top Speed', center: '450', bottom: 'km'),
                         CarSpecsContainer(
-                            header: 'Top Speed', center: '450', bottom: 'km')
+                            header: 'Horse Power', center: '620', bottom: 'km')
                       ],
                     ),
                   ),
