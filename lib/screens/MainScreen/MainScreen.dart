@@ -100,19 +100,16 @@ class _MainScreenState extends State<MainScreen> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => CarDetails(
-                                        CarsName: CArsData[index].CarName,
-                                        photo: CArsData[index].Side_Image,
-                                    frontView:CArsData[index].Front_Image,
-                                      interior:CArsData[index].Interior_Image,
-                                      gear:CArsData[index].Gear,
-                                      passenger:CArsData[index].passengers_capacity,
-
-
-
-
-
-
-                                    )));
+                                          CarsName: CArsData[index].CarName,
+                                          photo: CArsData[index].Side_Image,
+                                          frontView:
+                                              CArsData[index].Front_Image,
+                                          interior:
+                                              CArsData[index].Interior_Image,
+                                          gear: CArsData[index].Gear,
+                                          passenger: CArsData[index]
+                                              .passengers_capacity,
+                                        )));
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -169,50 +166,86 @@ class _MainScreenState extends State<MainScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        // Row(
-                                        //   mainAxisAlignment: MainAxisAlignment.start,
-                                        //   children: [
-                                        //     Expanded(
-                                        //         flex: 1,
-                                        //         child: ListTile(
-                                        //           contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                                        //           //horizontalTitleGap: .5,
-                                        //           minLeadingWidth: .5,
-                                        //           leading: Icon(Icons.person,color: PrimaryColor),
-                                        //           title: Text(CArsData[index].passengers_capacity.toString(),style: TextStyle(color: Colors.white),),
-                                        //         )),
-                                        //     Expanded(
-                                        //         flex: 4,
-                                        //         child: ListTile(
-                                        //           minLeadingWidth: 1,
-                                        //           leading: Icon(Icons.filter_list,color: PrimaryColor),
-                                        //           title: Text(CArsData[index].Gear,style: TextStyle(color: Colors.white)),
-                                        //         ))
-                                        //   ],
-                                        // ),
-
-                                        Text(
-                                          '\$  ',
-                                          style: TextStyle(
-                                              color: PrimaryColor,
-                                              fontSize: 22),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 15.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Icon(Icons.person,
+                                                      color: PrimaryColor),
+                                                  SizedBox(width: 5,),
+                                                  Text(
+                                                    CArsData[index]
+                                                        .passengers_capacity
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  SizedBox(width: 5,),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Icon(Icons.filter_list,
+                                                      color: PrimaryColor),
+                                                  SizedBox(width: 5,),
+                                                  Text(CArsData[index].Gear,
+                                                      style: TextStyle(
+                                                          color: Colors.white)),
+                                                ],
+                                              ),
+                                              // Expanded(
+                                              //     flex: 1,
+                                              //     child: ListTile(
+                                              //       contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                                              //       //horizontalTitleGap: .5,
+                                              //       minLeadingWidth: .5,
+                                              //       leading: Icon(Icons.person,color: PrimaryColor),
+                                              //       title: Text(CArsData[index].passengers_capacity.toString(),style: TextStyle(color: Colors.white),),
+                                              //     )),
+                                              // Expanded(
+                                              //     flex: 4,
+                                              //     child: ListTile(
+                                              //       minLeadingWidth: 1,
+                                              //       leading: Icon(Icons.filter_list,color: PrimaryColor),
+                                              //       title: Text(CArsData[index].Gear,style: TextStyle(color: Colors.white)),
+                                              //     ))
+                                            ],
+                                          ),
                                         ),
-                                        Text(
-                                          CArsData[index]
-                                                  .Rent_Price
-                                                  .toString() +
-                                              ' /',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20),
+                                        SizedBox(),
+                                        Padding(
+                                          padding: const EdgeInsets.only(right: 15.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                '\$  ',
+                                                style: TextStyle(
+                                                    color: PrimaryColor,
+                                                    fontSize: 22),
+                                              ),
+                                              Text(
+                                                CArsData[index]
+                                                        .Rent_Price
+                                                        .toString() +
+                                                    ' /',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20),
+                                              ),
+                                              Text(
+                                                'day',
+                                                style:
+                                                    TextStyle(color: Colors.grey),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                        Text(
-                                          'day',
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
-                                        SizedBox(
-                                          width: 20,
-                                        )
                                       ],
                                     )
                                   ],

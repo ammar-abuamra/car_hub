@@ -6,7 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import '../CarDetails.dart';
 
 class Booking extends StatefulWidget {
-  const Booking({Key? key}) : super(key: key);
+
+   Booking({Key? key}) : super(key: key);
 
   @override
   State<Booking> createState() => _BookingState();
